@@ -17,16 +17,16 @@ final class TimerManager {
     private init() {}
 
     func start(seconds: Int) {
-        timer?.invalidate()
-        remainingSeconds = max(0, seconds)
+        self.timer?.invalidate()
+        self.remainingSeconds = max(0, seconds)
 
-        guard remainingSeconds > 0 else {
-            print("0")
+        guard self.remainingSeconds > 0 else {
+            print("0 seconds remaining")
             return
         }
 
-        print(remainingSeconds)
-        timer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { [weak self] timer in
+        print("\(self.remainingSeconds) seconds remaining")
+        self.timer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { [weak self] timer in
             guard let self = self else {
                 timer.invalidate()
                 return
