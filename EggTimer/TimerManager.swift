@@ -4,7 +4,7 @@
 //
 //  Created by Codex on 2025-02-14.
 //
-
+import UIKit
 import Foundation
 
 final class TimerManager {
@@ -16,12 +16,13 @@ final class TimerManager {
 
     private init() {}
 
-    func start(seconds: Int) {
+    func start(seconds: Int, progressBar: UIProgressView, completion: @escaping () -> Void) {
         self.timer?.invalidate()
         self.remainingSeconds = max(0, seconds)
 
         guard self.remainingSeconds > 0 else {
             print("0 seconds remaining")
+            completion()
             return
         }
 
@@ -32,9 +33,12 @@ final class TimerManager {
                 return
             }
             self.remainingSeconds -= 1
-            print(self.remainingSeconds)
+            print("\(self.remainingSeconds) seconds remaining")
+            progressBar.progress = Float(seconds - self.remainingSeconds) / Float(seconds)
+
             if self.remainingSeconds <= 0 {
                 timer.invalidate()
+                completion()
             }
         }
     }
